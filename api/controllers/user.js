@@ -12,6 +12,17 @@ function create(req, res, next) {
   });
 }
 
+function read(req, res, next) {
+  User.find({}, (err, users) => {
+    if (err) {
+      next(err);
+    }
+
+    res.status(200).json(users);
+  });
+}
+
 module.exports = {
   create,
+  read,
 };

@@ -1,16 +1,11 @@
 import "bootstrap/dist/css/bootstrap.css";
-import { useEffect, useState } from "react";
 import useUser from "../hooks/user";
 
 export default function Home() {
-  const [username, setUsername] = useState("");
   const {
-    actions: { saveUser },
+    selectors: { username, users },
+    actions: { setUsername, handleFormSubmit },
   } = useUser();
-
-  const handleSubmit = () => {
-    saveUser(username);
-  };
 
   return (
     <main className="container">
@@ -26,6 +21,7 @@ export default function Home() {
               className="form-control"
               id="username"
               placeholder="General Kenobi"
+              value={username}
               onChange={(e) => {
                 setUsername(e.target.value);
               }}
@@ -35,12 +31,32 @@ export default function Home() {
             type="button"
             className="btn btn-primary"
             disabled={username.length === 0}
-            onClick={handleSubmit}
+            onClick={handleFormSubmit}
           >
             Submit
           </button>
         </div>
       </div>
+      {users.length > 0 && (
+        <div className="row justify-content-md-center">
+          <table className="table">
+            <thead>
+              <tr>
+                <th scope="col">id</th>
+                <th scope="col">Username</th>
+              </tr>
+            </thead>
+            <tbody>
+              {users.map(({ _id, username }) => (
+                <tr key={_id}>
+                  <th scope="row">{_id}</th>
+                  <td>{username}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
     </main>
   );
 }
