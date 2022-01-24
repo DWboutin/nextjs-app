@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import fetcher from "../utils/fetcher";
 
 const baseEndpoint = "http://localhost:3000/user";
 
